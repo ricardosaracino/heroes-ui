@@ -7,13 +7,11 @@ import {FormsModule} from '@angular/forms'; // <-- NgModel lives here
 import {AppComponent} from './app.component';
 
 
-
 import {HeroesComponent} from './heroes/heroes.component';
 
 import { HeroService } from './hero.service';
 import { MessageService } from './message.service';
 import { MessagesComponent } from './messages/messages.component';
-
 
 
 @NgModule({
