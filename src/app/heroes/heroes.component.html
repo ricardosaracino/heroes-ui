@@ -1,0 +1,42 @@
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-4">
+      <h2>Heroes</h2>
+
+      <ul class="list-group">
+        <li class="list-group-item"
+
+
+
+
+            *ngFor="let hero of heroes"
+            [class.active]="hero === selectedHero"
+            (click)="onSelect(hero);">
+
+
+          {{ hero.name }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-8">
+      <div *ngIf="selectedHero">
+
+        <h2>{{ selectedHero.name | uppercase }} Details</h2>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="selectedHero.name" placeholder="name">
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
