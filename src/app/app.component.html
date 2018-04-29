@@ -1,11 +1,23 @@
-<main class="site-main main">
+<main class="site-main main" role="main">
+
+  <div class="page-header">
+    <h1 class="bd-title">{{ title }}</h1>
+  </div>
+
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="/heroes">Heroes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="/heroes">Heroes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="/heroes">Heroes</a>
+    </li>
+  </ul>
 
   <section>
-    <div class="display-3">{{ title }}</div>
-  </section>
-
-  <section>
-    <app-heroes></app-heroes>
+    <router-outlet></router-outlet>
   </section>
 
   <section>

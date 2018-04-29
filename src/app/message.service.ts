@@ -8,7 +8,18 @@ export class MessageService {
     this.messages.push(message);
   }
 
-  clear() {
+  clearMessages() {
     this.messages = [];
+  }
+
+
+  errors: string[] = [];
+
+  addError(errors: string) {
+    this.errors.push(errors);
+  }
+
+  clearErrors() {
+    this.errors = [];
   }
 }

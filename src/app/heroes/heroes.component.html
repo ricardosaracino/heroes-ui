@@ -1,43 +1,24 @@
+<h3>Heroes</h3>
 
-<div class="container-fluid">
-
-  <div class="row">
-
-    <div class="col-4">
-      <h2>Heroes</h2>
-
-      <div class="list-group">
-
-        <a href="#" class="list-group-item list-group-item-action"
-
-
-
-
-            *ngFor="let hero of heroes"
-            [class.active]="hero === selectedHero"
-            (click)="onSelect(hero);">
-
-
-          {{ hero.name }}
-        </a>
-      </div>
-    </div>
-
-    <div class="col-8">
-      <div *ngIf="selectedHero">
-
-        <h2>{{ selectedHero.name | uppercase }} Details</h2>
-
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-          </div>
-          <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" [(ngModel)]="selectedHero.name" placeholder="name">
-        </div>
-
-
-      </div>
-    </div>
-  </div>
-
-</div>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Age</th>
+    <th scope="col">Updated</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let hero of heroes">
+    <td>
+      <a routerLink="/hero-detail/{{hero._id}}"
+         [class.active]="hero === selectedHero"
+         (click)="onSelect(hero);">
+        {{ hero.name }}
+      </a>
+    </td>
+    <td>{{ hero.age }}</td>
+    <td>{{ hero.updated | date: 'dd/MM/yyyy' }}</td>
+  </tr>
+  </tbody>
+</table>

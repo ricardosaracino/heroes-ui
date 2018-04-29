@@ -1,0 +1,31 @@
+<div *ngIf="hero">
+
+  <h3>Hero</h3>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+    </div>
+    <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" [(ngModel)]="hero.name">
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="inputGroup-sizing-default">Age</span>
+    </div>
+    <input type="text" class="form-control" aria-label="Age" aria-describedby="inputGroup-sizing-default" [(ngModel)]="hero.age">
+  </div>
+
+  <div class="card">
+    <ul class="list-group list-group-flush">
+      <li *ngIf="hero.created" class="list-group-item">Created: {{ hero.created | date: 'dd/MM/yyyy' }}</li>
+      <li *ngIf="hero.updated " class="list-group-item">Updated: {{ hero.updated | date: 'dd/MM/yyyy' }}</li>
+    </ul>
+  </div>
+
+  <div style="margin-top: 20px">
+    <button type="button" class="btn btn-primary" (click)="save();">Save</button>
+    <button type="button" class="btn btn-primary" (click)="delete(hero);">Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="goBack();">Back</button>
+  </div>
+</div>
