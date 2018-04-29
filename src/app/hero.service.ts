@@ -25,6 +25,10 @@ export class HeroService {
               private messageService: MessageService) {
   }
 
+  /**
+   * GET
+   * @returns {Observable<Hero[]>}
+   */
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
         tap(heroes => this.log(`fetched heroes`)),
@@ -32,6 +36,11 @@ export class HeroService {
       );
   }
 
+  /**
+   * GET
+   * @param {string} id
+   * @returns {Observable<Hero>}
+   */
   getHero(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
@@ -40,7 +49,12 @@ export class HeroService {
     );
   }
 
-  /** GET hero by id. Return `undefined` when id not found */
+  /**
+   * GET hero by id. Return `undefined` when id not found
+   *
+   * @param {string} id
+   * @returns {Observable<Hero>}
+   */
   getHero404<Data>(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/?id=${id}`;
     return this.http.get<Hero[]>(url)
@@ -55,7 +69,11 @@ export class HeroService {
   }
 
 
-  /** POST: add a new hero to the server */
+  /**
+   * POST
+   * @param {Hero} hero
+   * @returns {Observable<Hero>}
+   */
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
       tap((hero: Hero) => this.log(`added hero w/ id=${hero.name}`)),
@@ -63,7 +81,11 @@ export class HeroService {
     );
   }
 
-  /** POST: add a new hero to the server */
+  /**
+   * PUT
+   * @param {Hero} hero
+   * @returns {Observable<Hero>}
+   */
   updateHero(hero: Hero): Observable<Hero> {
     return this.http.put<Hero>(this.heroesUrl, hero, httpOptions).pipe(
       tap((hero: Hero) => this.log(`updated hero w/ id=${hero.name}`)),
@@ -71,7 +93,11 @@ export class HeroService {
     );
   }
 
-  /** DELETE: delete the hero from the server */
+  /**
+   * DELETE
+   * @param {Hero} hero
+   * @returns {Observable<Hero>}
+   */
   deleteHero(hero: Hero): Observable<Hero> {
     return this.http.request<Hero>('delete', this.heroesUrl, {body: hero}).pipe(
       tap(_ => this.log(`deleted hero id=${hero.name}`)),
@@ -80,10 +106,9 @@ export class HeroService {
   }
 
   /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
+   * @param {string} operation
+   * @param {T} result
+   * @returns {(error: any) => Observable<T>}
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
