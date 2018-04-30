@@ -1,14 +1,13 @@
-<h3>Login {{authUser.session_id}}</h3>
+<h3>Login</h3>
 
 <div class="input-group mb-3">
-  <input type="text" #username class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="username">
+  <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="username" [(ngModel)]="this.username">
 </div>
 
 <div class="input-group mb-3">
-  <input type="password" #password class="form-control" aria-describedby="inputGroup-sizing-default"
-         placeholder="password">
+  <input type="password" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="password" [(ngModel)]="this.password">
 </div>
 
 <div style="margin-top: 20px">
-  <button type="button" class="btn btn-primary" (click)="login(username.value, password.value);">Log in</button>
+  <button type="button" class="btn btn-primary" (click)="login();">Log in</button>
 </div>

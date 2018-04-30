@@ -10,6 +10,9 @@ import {AuthenticationService} from '../authentication.service';
   styleUrls: ['./login.component.css']
 })
 
+// https://github.com/fulls1z3/ngx-auth/tree/master/packages/@ngx-auth/core
+
+/*
 export class LoginComponent implements OnInit {
 
   authUser: AuthUser;
@@ -22,11 +25,28 @@ export class LoginComponent implements OnInit {
 
   login(username: string, password: string): void {
     this.authService.login(username, password)
-      .subscribe(authUser => this.authUser = authUser, err => console.log(err), function () {
+      .subscribe(authUser => this.authUser = authUser);
+  }
+}*/
 
-        localStorage.setItem('session_id', this.authUser.session_id)
 
-        console.log(this.authUser);
+export class LoginComponent implements OnInit {
+
+  username: string;
+  password: string;
+
+  constructor(private authService: AuthenticationService) {
+  }
+
+  ngOnInit() {
+  }
+
+  login(): void {
+    this.authService.login(this.username, this.password)
+      .subscribe(() => {
+        if (!this.authService.isAuthenticated) {
+          console.log('Error authenticating');
+        }
       });
   }
 }

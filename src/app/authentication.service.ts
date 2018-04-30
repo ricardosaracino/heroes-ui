@@ -10,13 +10,23 @@ import {AuthUser} from '../models/AuthUser';
 import {MessageService} from './message.service';
 
 
+
+// https://github.com/fulls1z3/ngx-auth/blob/master/packages/%40ngx-auth/core/src/auth.service.ts
+
+
 @Injectable()
 export class AuthenticationService {
 
   private loginUrl = 'http://localhost:8080/auth';
 
+
   constructor(private http: HttpClient,
               private messageService: MessageService) {
+  }
+
+
+  get isAuthenticated(): boolean {
+    return false;
   }
 
   /**
@@ -30,7 +40,9 @@ export class AuthenticationService {
     const url = `${this.loginUrl}/login`;
 
     return this.http.post<AuthUser>(url, {'username': username, 'password': password}).pipe(
-      tap(_ => this.log(`fetched AuthUser id=${username}`)),
+      tap(function (authUser: AuthUser) {
+        console.log(authUser.username);
+      }),
       catchError(this.handleError<AuthUser>(`login id=${username}`)),
     );
   }
