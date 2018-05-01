@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {AuthUser} from '../../models/AuthUser';
+import {AuthUser} from '../../models/auth-user';
 import {AuthenticationService} from '../authentication.service';
 
 
@@ -12,41 +12,28 @@ import {AuthenticationService} from '../authentication.service';
 
 // https://github.com/fulls1z3/ngx-auth/tree/master/packages/@ngx-auth/core
 
-/*
-export class LoginComponent implements OnInit {
-
-  authUser: AuthUser;
-
-  constructor(private authService: AuthenticationService) {
-  }
-
-  ngOnInit() {
-  }
-
-  login(username: string, password: string): void {
-    this.authService.login(username, password)
-      .subscribe(authUser => this.authUser = authUser);
-  }
-}*/
-
-
 export class LoginComponent implements OnInit {
 
   username: string;
   password: string;
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private auth: AuthenticationService) {
   }
 
   ngOnInit() {
   }
 
   login(): void {
-    this.authService.login(this.username, this.password)
+    this.auth.authenticate(this.username, this.password)
       .subscribe(() => {
-        if (!this.authService.isAuthenticated) {
+        if (!this.auth.isAuthenticated) {
           console.log('Error authenticating');
         }
       });
+  }
+
+
+  logout(): void {
+    this.auth.invalidate();
   }
 }

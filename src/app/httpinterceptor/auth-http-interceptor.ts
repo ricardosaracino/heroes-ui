@@ -33,6 +33,8 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
       if (error.status === 401) { // unauthorized
         console.log(error.status);
+
+        // todo invalidate authentication
       } else if (error.status === 403) { // forbidden
         console.log(error.status);
       }

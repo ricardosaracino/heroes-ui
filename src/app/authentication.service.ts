@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
+import {AuthLoader} from '@ngx-auth/core';
 
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {catchError, map, tap} from 'rxjs/operators';
 
-import {AuthUser} from '../models/AuthUser';
+import {AuthUser} from '../models/auth-user';
 import {MessageService} from './message.service';
-
 
 
 // https://github.com/fulls1z3/ngx-auth/blob/master/packages/%40ngx-auth/core/src/auth.service.ts
@@ -17,13 +17,24 @@ import {MessageService} from './message.service';
 @Injectable()
 export class AuthenticationService {
 
-  private loginUrl = 'http://localhost:8080/auth';
+  public authUser: AuthUser;
 
-
-  constructor(private http: HttpClient,
+  constructor(readonly loader: AuthLoader,
+              private http: HttpClient,
               private messageService: MessageService) {
+
+    console.log(this.loader.storage.getItem(this.loader.storageKey));
+
+    const currentUser = JSON.parse(this.loader.storage.getItem(this.loader.storageKey) || '{}');
+
+    this.authUser = currentUser && currentUser.authUser;
   }
 
+
+  // todo this gets called a lot, remove from app-component
+  get username(): string {
+    return this.authUser ? this.authUser.username : '';
+  }
 
   get isAuthenticated(): boolean {
     return false;
@@ -31,21 +42,62 @@ export class AuthenticationService {
 
   /**
    *
+   *
    * @param {string} username
    * @param {string} password
    * @returns {Observable<AuthUser>}
    */
-  login(username: string, password: string): Observable<AuthUser> {
+  authenticate(username: string, password: string): Observable<AuthUser> {
 
-    const url = `${this.loginUrl}/login`;
+    const params = this.getHttpParams(this.loader.backend.params);
 
-    return this.http.post<AuthUser>(url, {'username': username, 'password': password}).pipe(
-      tap(function (authUser: AuthUser) {
-        console.log(authUser.username);
+    return this.http.post<AuthUser>(this.loader.backend.endpoint, {
+      'username': username,
+      'password': password
+    }, {params}).pipe(
+      tap(authUser => {
+
+        this.loader.storage.setItem(this.loader.storageKey, JSON.stringify({
+          authUser,
+        }));
+
+        console.log(this.loader.storage.getItem(this.loader.storageKey));
       }),
-      catchError(this.handleError<AuthUser>(`login id=${username}`)),
+      catchError(
+        this.handleError<AuthUser>(`login id=${username}`)
+      ),
     );
+
+
+    /*map(authUser => {
+
+      this.loader.storage.setItem(this.loader.storageKey, JSON.stringify({
+        authUser,
+      }));
+
+      console.log(this.loader.storage.getItem(this.loader.storageKey));
+
+      return true;
+    }));*/
   }
+
+  invalidate(): void {
+    this.loader.storage.removeItem(this.loader.storageKey);
+    // this.router.navigate(this.loader.loginRoute);
+  }
+
+
+  protected getHttpParams = (query?: Array<any>): HttpParams => {
+    let res = new HttpParams();
+
+    if (query) {
+      for (const item of query) {
+        res = res.append(item.key, item.value);
+      }
+    }
+
+    return res;
+  };
 
   /**
    * @param {string} operation
