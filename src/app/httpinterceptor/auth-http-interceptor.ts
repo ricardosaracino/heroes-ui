@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
+import {AuthenticationService} from '../authentication.service';
 
 // https://stackoverflow.com/questions/48060749/angular-5-http-interceptor-refreshing-jwt-token
 // https://blog.angularindepth.com/insiders-guide-into-interceptors-and-httpclient-mechanics-in-angular-103fbdb397bf
@@ -14,7 +15,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
   /**
    *
    */
-  constructor() {
+  constructor(private authService: AuthenticationService) {
   }
 
   /**
@@ -32,9 +33,13 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     return next.handle(authReq).catch(error => {
 
       if (error.status === 401) { // unauthorized
-        console.log(error.status);
+        // session expired (or not logged in ?)
 
-        // todo invalidate authentication
+        console.log('Status 401 Unauthorized invalidating auth');
+
+        // clears local storage, redirects
+        this.authService.invalidate();
+
       } else if (error.status === 403) { // forbidden
         console.log(error.status);
       }

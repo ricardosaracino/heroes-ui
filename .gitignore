@@ -5,3 +5,5 @@ bower_components/
 tmp
 .DS_Store
 .idea
+/my-app.iml
+/package-lock.json

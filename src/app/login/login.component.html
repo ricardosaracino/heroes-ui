@@ -1,13 +1,19 @@
-<h3>Login</h3>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Tour of Heroes</h1>
+  </div>
 
-<div class="input-group mb-3">
-  <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="username" [(ngModel)]="this.username">
-</div>
+  <h3>Login</h3>
 
-<div class="input-group mb-3">
-  <input type="password" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="password" [(ngModel)]="this.password">
-</div>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="username" [(ngModel)]="this.username">
+  </div>
 
-<div style="margin-top: 20px">
-  <button type="button" class="btn btn-primary" (click)="login();">Log in</button>
+  <div class="input-group mb-3">
+    <input type="password" class="form-control" aria-describedby="inputGroup-sizing-default" placeholder="password" [(ngModel)]="this.password">
+  </div>
+
+  <div style="margin-top: 20px">
+    <button type="button" class="btn btn-primary" (click)="login();">Log in</button>
+  </div>
 </div>

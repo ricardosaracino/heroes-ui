@@ -117,7 +117,7 @@ export class HeroService {
       console.log(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.messageService.addError(`HeroService ${operation} failed: ${error.message}`);
+      this.messageService.addError(`HeroService ${operation} failed: ${error.error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);

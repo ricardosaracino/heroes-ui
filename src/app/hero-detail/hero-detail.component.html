@@ -4,14 +4,14 @@
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+      <span class="input-group-text">Name</span>
     </div>
     <input type="text" class="form-control" aria-label="Name" aria-describedby="inputGroup-sizing-default" [(ngModel)]="hero.name">
   </div>
 
   <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="inputGroup-sizing-default">Age</span>
+      <span class="input-group-text">Age</span>
     </div>
     <input type="text" class="form-control" aria-label="Age" aria-describedby="inputGroup-sizing-default" [(ngModel)]="hero.age">
   </div>
@@ -19,7 +19,7 @@
   <div class="card">
     <ul class="list-group list-group-flush">
       <li *ngIf="hero.created" class="list-group-item">Created: {{ hero.created | date: 'dd/MM/yyyy' }}</li>
-      <li *ngIf="hero.updated " class="list-group-item">Updated: {{ hero.updated | date: 'dd/MM/yyyy' }}</li>
+      <li *ngIf="hero.updated" class="list-group-item">Updated: {{ hero.updated | date: 'dd/MM/yyyy' }}</li>
     </ul>
   </div>
 

@@ -10,15 +10,18 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {AuthUser} from '../models/auth-user';
 import {MessageService} from './message.service';
 import {Router} from '@angular/router';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
 // https://github.com/fulls1z3/ngx-auth/blob/master/packages/%40ngx-auth/core/src/auth.service.ts
-
+// https://blog.realworldfullstack.io/real-world-angular-part-6-3rs-rules-roles-routes-9e7de5a3ea8e
 
 @Injectable()
 export class AuthenticationService {
 
   public authUser: AuthUser;
+
+  private _redirectUrl: string;
 
   constructor(readonly loader: AuthLoader,
               protected readonly router: Router,
@@ -32,19 +35,31 @@ export class AuthenticationService {
     this.authUser = currentUser && currentUser.authUser;
   }
 
+
+  get redirectUrl(): string {
+    return this._redirectUrl;
+  }
+
+  set redirectUrl(value: string) {
+    this._redirectUrl = value;
+  }
+
+
   // todo this gets called a lot, remove from app-component
   get username(): string {
 
     return this.authUser && this.authUser.username;
   }
 
-  get isAuthenticated(): boolean {
-    return !!this.authUser;
+  get roles() {
+    return this.authUser && this.authUser.roles;
+  }
+
+  get isAuthenticated() {
+    return !!this.loader.storage.getItem(this.loader.storageKey);
   }
 
   /**
-   *
-   *
    * @param {string} username
    * @param {string} password
    * @returns {Observable<AuthUser>}
@@ -69,10 +84,10 @@ export class AuthenticationService {
 
         console.log(this.loader.storage.getItem(this.loader.storageKey));
 
-        this.router.navigateByUrl(this.loader.defaultUrl);
+        this.router.navigateByUrl(this._redirectUrl || this.loader.defaultUrl);
       }),
       catchError(
-        this.handleError<AuthUser>(`login id=${username}`)
+        this.handleError<AuthUser>(`login`)
       ),
     );
   }
@@ -82,13 +97,9 @@ export class AuthenticationService {
       tap(_ => {
         this.log(`auth removed`);
 
-        this.authUser = undefined;
-
-        this.loader.storage.removeItem(this.loader.storageKey);
-
-        this.router.navigate(this.loader.loginRoute);
+        this.invalidate();
       }),
-      catchError(this.handleError<any>('invalidate'))
+      catchError(this.handleError<any>('logout'))
     );
   }
 
@@ -124,10 +135,10 @@ export class AuthenticationService {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure
-      console.log('AuthenticationService', 'handleError', JSON.stringify(error)); // log to console instead
+      console.log(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.messageService.addError(`HeroService ${operation} failed: ${error.message}`);
+      this.messageService.addError(`HeroService ${operation} failed: ${error.error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);

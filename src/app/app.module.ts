@@ -21,19 +21,21 @@ import {MessagesComponent} from './messages/messages.component';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AuthHttpInterceptor} from './httpinterceptor/auth-http-interceptor';
+import {HeaderComponent} from './header/header.component';
+import {AuthenticationGuard} from './authentication.gaurd';
 
 
 
 export function authFactory(): AuthLoader {
   return new AuthStaticLoader({
     backend: {
-      endpoint: 'http://localhost:8080/auth/login',
+      endpoint: 'http://localhost:8080/authenticate',
       params: []
     },
     storage: localStorage,
     storageKey: 'auth-user',
     loginRoute: ['login'],
-    defaultUrl: ''
+    defaultUrl: 'heroes'
   });
 }
 
@@ -54,12 +56,14 @@ export function authFactory(): AuthLoader {
     HeroDetailComponent,
     HeroesComponent,
     MessagesComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
   ],
   providers: [
     HeroService,
     MessageService,
     AuthenticationService,
+    AuthenticationGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptor,
