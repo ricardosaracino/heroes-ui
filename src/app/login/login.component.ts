@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {AuthenticationService} from '../authentication.service';
+import {CanActivate, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -16,16 +17,20 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private auth: AuthenticationService) {
+  constructor(private authService: AuthenticationService, private router: Router) {
+
+    if (authService.isAuthenticated) { // redirect to home if logged in
+      router.navigate([authService.defaultUrl]);
+    }
   }
 
   ngOnInit() {
   }
 
   login(): void {
-    this.auth.authenticate(this.username, this.password)
+    this.authService.authenticate(this.username, this.password)
       .subscribe(() => {
-        if (!this.auth.isAuthenticated) {
+        if (!this.authService.isAuthenticated) {
           console.log('Error authenticating');
         } else {
           console.log('Successfully authenticating');
@@ -34,8 +39,8 @@ export class LoginComponent implements OnInit {
   }
 
   logout(): void {
-    this.auth.logout().subscribe(() => {
-      if (this.auth.isAuthenticated) {
+    this.authService.logout().subscribe(() => {
+      if (this.authService.isAuthenticated) {
         console.log('Error un-authenticating');
       } else {
         console.log('Successfully un-authenticating');

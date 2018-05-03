@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
   isCollapsed = false;
 
-  constructor(protected auth: AuthenticationService, private router: Router) {
+  constructor(protected authService: AuthenticationService, private router: Router) {
 
     console.log('HeaderComponent');
 
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
 
       console.log('route changed');
 
-      this.isAuthenticated$ = (new BehaviorSubject<boolean>(this.auth.isAuthenticated)).asObservable(); // {1}
+      this.isAuthenticated$ = (new BehaviorSubject<boolean>(this.authService.isAuthenticated)).asObservable(); // {1}
     });
   }
 
@@ -35,6 +35,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.auth.logout().subscribe();
+    this.authService.logout().subscribe();
   }
 }

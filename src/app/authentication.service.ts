@@ -35,6 +35,10 @@ export class AuthenticationService {
     this.authUser = currentUser && currentUser.authUser;
   }
 
+  get defaultUrl(): string {
+    return this.loader.defaultUrl;
+  }
+
   get redirectUrl(): string {
     return this._redirectUrl;
   }
@@ -51,7 +55,7 @@ export class AuthenticationService {
     return this.authUser && this.authUser.roles;
   }
 
-  get isAuthenticated() {
+  get isAuthenticated()  {
     return !!this.loader.storage.getItem(this.loader.storageKey);
   }
 

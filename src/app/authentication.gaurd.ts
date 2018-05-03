@@ -7,7 +7,7 @@ import {AuthenticationService} from './authentication.service';
 @Injectable()
 export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private readonly loader: AuthLoader,
-              private readonly auth: AuthenticationService,
+              private readonly authService: AuthenticationService,
               private readonly router: Router) {
   }
 
@@ -28,8 +28,8 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
   }
 
   private handleAuth(url: string, data): boolean {
-    if (!this.auth.isAuthenticated) {
-      this.auth.redirectUrl = url;
+    if (!this.authService.isAuthenticated) {
+      this.authService.redirectUrl = url;
 
       this.router.navigate(this.loader.loginRoute);
 
@@ -38,7 +38,7 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
 
     if (data.roles instanceof Array) {
 
-      const res = this.auth.authUser.roles.filter(function (n) {
+      const res = this.authService.authUser.roles.filter(function (n) {
         return data.roles.indexOf(n) > -1;
       });
 

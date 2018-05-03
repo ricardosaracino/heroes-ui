@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {AuthenticationService} from './authentication.service';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -11,14 +12,11 @@ import {AuthenticationService} from './authentication.service';
 
 export class AppComponent {
 
-  public title = 'Tour of Heroes';
-
   /**
    * @param {Meta} meta
    * @param {AuthenticationService} auth
    */
-  constructor(private meta: Meta, public auth: AuthenticationService) {
-
+  constructor(private meta: Meta) {
     this.meta.addTag({name: 'description', content: 'Tour of Heroes'});
     this.meta.addTag({name: 'author', content: 'Ricardo Saracino'});
     this.meta.addTag({name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no'});
