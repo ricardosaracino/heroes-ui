@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from '../authentication.service';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {AuthenticationService} from '../../services/authentication.service';
+
 
 @Component({
   selector: 'app-header',

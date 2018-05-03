@@ -3,10 +3,10 @@ import {RouterModule, Routes} from '@angular/router';
 
 // todo add roles??
 
-import {LoginComponent} from './login/login.component';
-import {HeroesComponent} from './heroes/heroes.component';
-import {HeroDetailComponent} from './hero-detail/hero-detail.component';
-import {AuthenticationGuard} from './authentication.gaurd';
+import {LoginComponent} from './components/login/login.component';
+import {HeroesComponent} from './components/heroes/heroes.component';
+import {HeroDetailComponent} from './components/hero-detail/hero-detail.component';
+import {AuthenticationGuard} from './gaurds/authentication.gaurd';
 
 
 const routes: Routes = [

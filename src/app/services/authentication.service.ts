@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 import {AuthLoader} from '@ngx-auth/core';
 
@@ -9,8 +10,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 
 import {AuthUser} from '../models/auth-user';
 import {MessageService} from './message.service';
-import {Router} from '@angular/router';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+
 
 
 // https://github.com/fulls1z3/ngx-auth/blob/master/packages/%40ngx-auth/core/src/auth.service.ts

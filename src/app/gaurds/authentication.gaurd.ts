@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot} from '@angular/router';
 import {AuthLoader} from '@ngx-auth/core';
-import {AuthenticationService} from './authentication.service';
-
+import {AuthenticationService} from '../services/authentication.service';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLoad {
+
   constructor(private readonly loader: AuthLoader,
               private readonly authService: AuthenticationService,
               private readonly router: Router) {

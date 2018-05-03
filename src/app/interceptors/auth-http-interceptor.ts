@@ -4,7 +4,8 @@ import {Observable} from 'rxjs/Observable';
 
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
-import {AuthenticationService} from '../authentication.service';
+
+import {AuthenticationService} from '../services/authentication.service';
 
 // https://stackoverflow.com/questions/48060749/angular-5-http-interceptor-refreshing-jwt-token
 // https://blog.angularindepth.com/insiders-guide-into-interceptors-and-httpclient-mechanics-in-angular-103fbdb397bf
