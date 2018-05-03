@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import { AuthModule, AuthLoader, AuthStaticLoader } from '@ngx-auth/core';
+import {AuthModule, AuthLoader, AuthStaticLoader} from '@ngx-auth/core';
 
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
@@ -9,18 +9,19 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {HeroDetailComponent} from './components/hero-detail/hero-detail.component';
-import {HeroesComponent} from './components/heroes/heroes.component';
-import {MessagesComponent} from './components/messages/messages.component';
 import {LoginComponent} from './components/login/login.component';
 import {HeaderComponent} from './components/header/header.component';
+import {HeroDetailComponent} from './components/hero-detail/hero-detail.component';
+import {HeroesComponent} from './components/heroes/heroes.component';
+import {HeroCreateComponent} from './components/hero-create/hero-create.component';
+import {MessagesComponent} from './components/messages/messages.component';
+
 
 import {HeroService} from './services/hero.service';
 import {MessageService} from './services/message.service';
 import {AuthenticationService} from './services/authentication.service';
 import {AuthenticationGuard} from './gaurds/authentication.gaurd';
 import {AuthHttpInterceptor} from './interceptors/auth-http-interceptor';
-
 
 
 export function authFactory(): AuthLoader {
@@ -50,11 +51,12 @@ export function authFactory(): AuthLoader {
   ],
   declarations: [
     AppComponent,
-    HeroDetailComponent,
-    HeroesComponent,
-    MessagesComponent,
     LoginComponent,
     HeaderComponent,
+    HeroesComponent,
+    HeroDetailComponent,
+    HeroCreateComponent,
+    MessagesComponent,
   ],
   providers: [
     HeroService,

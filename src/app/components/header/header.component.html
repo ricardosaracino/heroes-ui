@@ -20,6 +20,10 @@
       </li>
 
       <li class="nav-item">
+        <button class="nav-link active btn btn-link" routerLink="/hero-create">Add Hero</button>
+      </li>
+
+      <li class="nav-item">
         <button class="nav-link active btn btn-link" (click)="onLogout()" *ngIf="isAuthenticated$ | async">Logout
         </button>
       </li>
