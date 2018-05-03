@@ -11,12 +11,15 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 })
 
 // todo https://stackoverflow.com/questions/45951341/cant-toggle-navbar-in-bootstrap-4-in-angular/46883241#46883241
+// https://stackoverflow.com/questions/14741988/twitter-bootstrap-navbar-with-angularjs-collapse-not-functioning#17672546
 
 export class HeaderComponent implements OnInit {
 
   isAuthenticated$: Observable<boolean>;
 
-  constructor(private auth: AuthenticationService, private router: Router) {
+  isCollapsed = false;
+
+  constructor(protected auth: AuthenticationService, private router: Router) {
 
     console.log('HeaderComponent');
 
@@ -24,8 +27,7 @@ export class HeaderComponent implements OnInit {
 
       console.log('route changed');
 
-
-      this.isAuthenticated$ = (new BehaviorSubject<boolean>( this.auth.isAuthenticated)).asObservable(); // {1}
+      this.isAuthenticated$ = (new BehaviorSubject<boolean>(this.auth.isAuthenticated)).asObservable(); // {1}
     });
   }
 

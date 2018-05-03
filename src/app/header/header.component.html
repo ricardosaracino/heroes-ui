@@ -2,12 +2,14 @@
 
   <span class="navbar-brand">Tour of Heroes</span>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-toggle="collapse"
+          data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+          aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
+  <div class="collapse navbar-collapse" [class.collapse]="isCollapsed">
+    <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
         <button class="nav-link active btn btn-link" routerLink="">Home</button>
@@ -18,8 +20,11 @@
       </li>
 
       <li class="nav-item">
-        <button class="nav-link active btn btn-link" (click)="onLogout()" *ngIf="isAuthenticated$ | async">Logout</button>
+        <button class="nav-link active btn btn-link" (click)="onLogout()" *ngIf="isAuthenticated$ | async">Logout
+        </button>
       </li>
     </ul>
+
+    <span class="navbar-text">{{ auth.username }}</span>
   </div>
 </nav>

@@ -61,7 +61,7 @@ export class HeroService {
       .pipe(
         map(heroes => heroes[0]), // returns a {0|1} element array
         tap(h => {
-          const outcome = h ? `fetched gg` : `did not find`;
+          const outcome = h ? `fetched` : `did not find`;
           this.log(`${outcome} hero id=${id}`);
         }),
         catchError(this.handleError<Hero>(`getHero id=${id}`))
@@ -76,8 +76,8 @@ export class HeroService {
    */
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`added hero w/ id=${hero.name}`)),
-      catchError(this.handleError<Hero>('addHero'))
+      tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
+      catchError(this.handleError<Hero>(`addHero id=${hero.id}`))
     );
   }
 
@@ -88,8 +88,8 @@ export class HeroService {
    */
   updateHero(hero: Hero): Observable<Hero> {
     return this.http.put<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`updated hero w/ id=${hero.name}`)),
-      catchError(this.handleError<Hero>('updateHero'))
+      tap((hero: Hero) => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<Hero>('updateHero id=${hero.id}'))
     );
   }
 

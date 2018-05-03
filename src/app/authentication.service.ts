@@ -35,7 +35,6 @@ export class AuthenticationService {
     this.authUser = currentUser && currentUser.authUser;
   }
 
-
   get redirectUrl(): string {
     return this._redirectUrl;
   }
@@ -44,10 +43,7 @@ export class AuthenticationService {
     this._redirectUrl = value;
   }
 
-
-  // todo this gets called a lot, remove from app-component
   get username(): string {
-
     return this.authUser && this.authUser.username;
   }
 

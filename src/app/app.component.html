@@ -2,20 +2,17 @@
 
   <app-header></app-header>
 
-    <div class="container" style="margin: 1em 4em;">
-
-    <!--<div class="page-header">
-      <h1 class="bd-title">{{ title }}</h1>
-      <small></small>
+  <div class="container m-auto p-3">
+    <div class="row-fluid">
+      <section>
+        <router-outlet></router-outlet>
+      </section>
     </div>
-    -->
 
-    <section>
-      <router-outlet></router-outlet>
-    </section>
-
-    <section>
-      <app-messages></app-messages>
-    </section>
+    <div class="row-fluid">
+      <section>
+        <app-messages></app-messages>
+      </section>
+    </div>
   </div>
 </main>
