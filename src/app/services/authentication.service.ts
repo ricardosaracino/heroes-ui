@@ -137,8 +137,10 @@ export class AuthenticationService {
       // TODO: send the error to remote logging infrastructure
       console.log(error); // log to console instead
 
+      const message = error.error ? error.error : error.message;
+
       // TODO: better job of transforming error for user consumption
-      this.messageService.addError(`AuthenticationService ${operation} failed: ${error.message}`);
+      this.messageService.addError(`AuthenticationService: ${operation} failed: ${message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -147,6 +149,6 @@ export class AuthenticationService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add('AuthenticationService: ' + message);
+    this.messageService.add(`AuthenticationService: ${message}`);
   }
 }

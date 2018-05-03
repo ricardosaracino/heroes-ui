@@ -7,6 +7,7 @@ import {catchError, map, tap} from 'rxjs/operators';
 
 import {Hero} from '../models/hero';
 import {MessageService} from './message.service';
+import {error} from 'util';
 
 
 const httpOptions = {
@@ -31,8 +32,8 @@ export class HeroService {
    */
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
-      tap(heroes => this.log(`fetched heroes`)),
-      catchError(this.handleError('getHeroes', []))
+      tap(heroes => this.log(`Fetched Heroes`)),
+      catchError(this.handleError(`Fetch Heroes`, []))
     );
   }
 
@@ -44,8 +45,8 @@ export class HeroService {
   getHero(id: string): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get<Hero>(url).pipe(
-      tap(_ => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Hero>(`getHero id=${id}`)),
+      tap(hero => this.log(`Fetched Hero ${hero.name}`)),
+      catchError(this.handleError<Hero>(`Fetch Hero`)),
     );
   }
 
@@ -76,8 +77,8 @@ export class HeroService {
    */
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
-      catchError(this.handleError<Hero>(`addHero id=${hero.id}`))
+      tap((hero: Hero) => this.log(`Added Hero ${hero.name}`)),
+      catchError(this.handleError<Hero>(`Add Hero ${hero.name}`))
     );
   }
 
@@ -88,8 +89,8 @@ export class HeroService {
    */
   updateHero(hero: Hero): Observable<Hero> {
     return this.http.put<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      tap((hero: Hero) => this.log(`updated hero id=${hero.id}`)),
-      catchError(this.handleError<Hero>('updateHero id=${hero.id}'))
+      tap((hero: Hero) => this.log(`Updated Hero ${hero.name}`)),
+      catchError(this.handleError<Hero>(`Update Hero ${hero.name}`))
     );
   }
 
@@ -100,8 +101,8 @@ export class HeroService {
    */
   deleteHero(hero: Hero): Observable<Hero> {
     return this.http.request<Hero>('delete', this.heroesUrl, {body: hero}).pipe(
-      tap(_ => this.log(`deleted hero id=${hero.name}`)),
-      catchError(this.handleError<Hero>('deleteHero'))
+      tap(_ => this.log(`Deleted Hero ${hero.name}`)),
+      catchError(this.handleError<Hero>(`Delete Hero ${hero.name}`))
     );
   }
 
@@ -116,8 +117,11 @@ export class HeroService {
       // TODO: send the error to remote logging infrastructure
       console.log(error); // log to console instead
 
+      // TODO: this is a fucking mess
+      const message = error.error.error ? error.error.error : (error.error ? error.error : error.message);
+
       // TODO: better job of transforming error for user consumption
-      this.messageService.addError(`HeroService ${operation} failed: ${error.error.message}`);
+      this.messageService.addError(`${operation} failed: ${message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -126,6 +130,6 @@ export class HeroService {
 
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
-    this.messageService.add('HeroService: ' + message);
+    this.messageService.add(`${message}`);
   }
 }
