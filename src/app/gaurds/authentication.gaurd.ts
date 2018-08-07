@@ -11,6 +11,9 @@ export class AuthenticationGuard implements CanActivate, CanActivateChild, CanLo
               private readonly router: Router) {
   }
 
+  /**
+   * https://angular.io/guide/router#milestone-5-route-guards
+   */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url = state.url;
 
